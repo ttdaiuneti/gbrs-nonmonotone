@@ -7,12 +7,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import sys
+
+import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# Embed TrueType (Type 42) fonts, as journals require; no Type 3 fonts.
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+# Serif text and STIX math, to match the manuscript font.
+matplotlib.rcParams["font.family"] = "STIXGeneral"
+matplotlib.rcParams["mathtext.fontset"] = "stix"
+
 ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
-FIGS = ROOT / "NEU" / "manuscript" / "figures"
+FIGS = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "figures"
 
 METHODS = ["NRS", "GBRS", "HTBS"]
 COLORS = {"NRS": "#1f77b4", "GBRS": "#d62728", "HTBS": "#2ca02c"}
@@ -37,93 +47,91 @@ def cliques(ranks: dict, cd: float) -> list[list[str]]:
 
 
 def _fmt_p(p: float) -> str:
-    return f"{p:.1e}".replace("e-0", "e-").replace("e+0", "e+")
+    mant, exp = f"{p:.1e}".split("e")
+    return rf"{mant}\times10^{{{int(exp)}}}"
 
 
 def draw_panel(ax, ranks: dict, cd: float, title: str, p_chi2: float, n: int):
-    """Demsar-style CD diagram: clique bars sit immediately under the axis so a
-    tie is visibly *joined* (the caption's claim), and the CD ruler is placed
-    clear of the method labels.  Bars carry a small visual padding because a
-    tie can be far narrower than a line width (e.g. 0.03 rank on kNN-3)."""
-    xmin, xmax = 0.80, 3.20
-    ax.set_xlim(xmin, xmax)  # rank 1 = best, on the left (Demsar 2006)
-    ax.set_ylim(-1.05, 1.75)
-    ax.axhline(0.0, color="black", lw=1.2, zorder=1)
+    """Demsar-style critical-difference diagram.
+
+    The rank axis runs along the top (rank 1 = best, on the left).  Each method
+    hangs from its rank with an elbow line to a label on the nearer side of the
+    axis; methods whose ranks differ by less than CD are joined by a thick bar.
+    Elbow depths are chosen so that no line crosses another one."""
+    lo, hi = 1.0, 3.0
+    ax.set_xlim(-0.55, 4.55)
+    ax.set_ylim(-1.55, 1.45)
+    ax.axis("off")
+
+    # rank axis on top
+    ax.plot([lo, hi], [0, 0], color="black", lw=1.2)
     for t in (1.0, 1.5, 2.0, 2.5, 3.0):
-        big = (t % 1.0 == 0.0)
-        ax.plot([t, t], [-0.05, 0.05] if big else [-0.03, 0.03],
-                color="black", lw=1.1 if big else 0.8, zorder=2)
+        big = t % 1.0 == 0.0
+        ax.plot([t, t], [0, 0.07 if big else 0.045], color="black", lw=1.1)
         if big:
-            ax.text(t, 0.09, f"{t:g}", ha="center", va="bottom", fontsize=8.5)
+            ax.text(t, 0.12, f"{t:g}", ha="center", va="bottom", fontsize=10)
 
-    # CD ruler, kept above every method label
-    y_cd = 1.46
-    cd_left = 1.02
-    ax.plot([cd_left, cd_left + cd], [y_cd, y_cd], color="black", lw=2.0, zorder=3)
-    for xe in (cd_left, cd_left + cd):
-        ax.plot([xe, xe], [y_cd - 0.09, y_cd + 0.09], color="black", lw=2.0, zorder=3)
-    ax.text(cd_left + cd / 2, y_cd + 0.14, f"CD = {cd:.2f}", ha="center",
-            va="bottom", fontsize=9, fontweight="bold")
+    # CD ruler above the axis
+    y_cd = 0.82
+    x0 = lo
+    ax.plot([x0, x0 + cd], [y_cd, y_cd], color="black", lw=1.8)
+    for xe in (x0, x0 + cd):
+        ax.plot([xe, xe], [y_cd - 0.07, y_cd + 0.07], color="black", lw=1.8)
+    ax.text(x0 + cd / 2, y_cd + 0.12, f"CD = {cd:.2f}", ha="center",
+            va="bottom", fontsize=10)
 
-    # method markers with stems and labels, staggered so near-equal ranks
-    # (GBRS 2.37 vs HTBS 2.40) do not print on top of one another
     order = sorted(METHODS, key=lambda m: ranks[m])
-    levels = [0.34, 0.86, 0.34]
-    for i, m in enumerate(order):
-        r = ranks[m]
-        y = levels[i]
-        ax.plot([r, r], [0.0, y], color=COLORS[m], lw=1.4, zorder=3)
-        ax.plot(r, 0.0, "o", color=COLORS[m], ms=7, zorder=4)
-        ax.text(r, y + 0.04, f"{m}\n{ranks[m]:.2f}", ha="center", va="bottom",
-                fontsize=9, color=COLORS[m], fontweight="bold", linespacing=1.15)
+    left = [m for m in order if ranks[m] < (lo + hi) / 2]
+    right = [m for m in order if ranks[m] >= (lo + hi) / 2]
+    # shallowest elbow for the method nearest the outer end of its group
+    def depths(group, outer_first):
+        seq = group if outer_first else group[::-1]
+        return {m: -(0.55 + 0.42 * k) for k, m in enumerate(seq)}
+    dl = depths(left, outer_first=True)      # leftmost = shallowest
+    dr = depths(right[::-1], outer_first=True)  # rightmost = shallowest
+    for group, dep, side in ((left, dl, "L"), (right, dr, "R")):
+        for m in group:
+            r, y = ranks[m], dep[m]
+            xl = lo - 0.12 if side == "L" else hi + 0.12
+            ax.plot([r, r, xl], [0, y, y], color="black", lw=1.0)
+            ax.text(xl + (-0.06 if side == "L" else 0.06), y,
+                    f"{m} ({r:.2f})", ha="right" if side == "L" else "left",
+                    va="center", fontsize=10)
 
-    # clique bars: immediately below the axis, so "joined by a bar" is literal
-    pad = 0.055
-    ybar = -0.30
+    # thick bars joining methods that are not significantly different
+    pad = 0.03
     drawn = 0
     for g in cliques(ranks, cd):
         if len(g) < 2:
             continue
-        lo = min(ranks[m] for m in g) - pad
-        hi = max(ranks[m] for m in g) + pad
-        yy = ybar - 0.26 * drawn
-        ax.plot([lo, hi], [yy, yy], color="#c0392b", lw=4.0,
-                solid_capstyle="round", zorder=5)
-        gap = max(ranks[m] for m in g) - min(ranks[m] for m in g)
-        ax.text((lo + hi) / 2, yy - 0.10,
-                r"$\Delta$ rank $=%.2f \leq$ CD" % gap, ha="center", va="top",
-                fontsize=7.4, color="#c0392b")
+        lo_g = min(ranks[m] for m in g) - pad
+        hi_g = max(ranks[m] for m in g) + pad
+        yy = -0.20 - 0.14 * drawn
+        ax.plot([lo_g, hi_g], [yy, yy], color="black", lw=3.5,
+                solid_capstyle="butt")
         drawn += 1
 
-    ax.set_title(title + f"\nFriedman $p={_fmt_p(p_chi2)}$, $n={n}$",
-                 fontsize=10, pad=8)
-    ax.set_yticks([])
-    for s in ("left", "right", "top", "bottom"):
-        ax.spines[s].set_visible(False)
-    ax.tick_params(bottom=False, labelbottom=False)
+    ax.text((lo + hi) / 2, -1.5, title + rf", Friedman $p={_fmt_p(p_chi2)}$",
+            ha="center", va="bottom", fontsize=10.5)
 
 
 def main() -> None:
     ranks_df = pd.read_csv(RESULTS / "stats_ranks_rerun.csv")
     fried = pd.read_csv(RESULTS / "stats_friedman_rerun.csv").set_index("metric")
 
-    fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.35))
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6))
     panels = [
         ("knn3_acc", "kNN-3"),
         ("svm_acc", "SVM-RBF"),
     ]
-    for ax, (metric, name) in zip(axes, panels):
+    for ax, (metric, name), tag in zip(axes, panels, "ab"):
         sub = ranks_df[ranks_df.metric == metric].set_index("method")
         ranks = {m: float(sub.loc[m, "mean_rank"]) for m in METHODS}
         row = fried.loc[metric]
         draw_panel(ax, ranks, float(row["nemenyi_CD_alpha05"]),
-                   name, float(row["p_chi2"]), int(row["n_datasets"]))
+                   f"({tag}) {name}", float(row["p_chi2"]),
+                   int(row["n_datasets"]))
 
-    fig.suptitle(
-        "Nemenyi CD diagram — average rank (rank 1 = best); "
-        "red bar = not significantly different",
-        fontsize=10.5, y=1.02,
-    )
     fig.tight_layout()
     pdf = FIGS / "fig_cd_diagram.pdf"
     png = FIGS / "fig_cd_diagram.png"

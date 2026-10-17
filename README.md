@@ -49,6 +49,9 @@ Run from inside `code/`.
 | `run_mono_all.py` | `mono_audit.csv` | Table 1 (reference audit), Fig. 4 |
 | `run_mono_multiseed.py` | `mono_audit_multiseed.csv` | Table (multi-seed), §4.4 |
 | `run_nmin_fixed_audit.py` | `nmin_fixed_audit_16sets.csv` | Table (n_min confound), §4.4, headline 18.7% |
+| `run_param_sensitivity.py` | `param_sensitivity.csv` | Sensitivity table (minimum ball size, entropy fraction, NRS radius) |
+| `summarize_param_sensitivity.py` | `param_sensitivity_summary.csv` | Summary and paired tests behind the sensitivity table |
+| `format_results_tables.py` | LaTeX accuracy tables | Three-decimal kNN/SVM tables from the raw CSVs |
 | `run_nrs_fixed_delta.py` | `nrs_fixed_delta.csv` | Table (fixed-δ), §4.4 |
 | `run_variant_audit.py` | `variant_audit.csv` | Table (variants), §4.4 |
 | `run_greedy_path_audit.py` | `greedy_path_audit.csv` | §4.5 greedy-path + γ_AT-overshoot |
