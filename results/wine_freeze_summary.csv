@@ -1,0 +1,2 @@
+mean_gamma,mean_nonpos_pct,mean_nmin_freeze_pct,mean_nmin_ceiling,best_first_attr,best_first_gamma,greedy_first_attr,greedy_first_gamma,greedy_first_nmin_ceiling,greedy_path_gamma,htbs_gamma_AT,gbrs_gamma_star,gbrs_reduct,htbs_reduct
+0.4835781538461539,51.642184615384615,15.38460769230769,0.8461539230769232,6,0.769663,6,0.769663,0.808989,0.769663,0.724719,0.949438,6;9;7,6

@@ -1,0 +1,11 @@
+dataset,n,d,scaled_delta_viol,fixed_delta_viol,note
+wine,178,13,0.1342,0.0,
+sonar,208,60,0.0274,0.0,
+heart_statlog,270,13,1.6107,0.0,
+ecoli,336,7,0.7634,0.0,
+ionosphere,351,34,0.9667,0.0,
+dermatology,366,34,2.9,0.0,
+spectf,349,44,0.072,0.0,
+breast_cancer,569,30,0.545,0.0,
+diabetes,768,8,0.0,0.0,
+vehicle,846,18,3.2258,0.0,

@@ -1,0 +1,57 @@
+[ok] wine           GBRS  |R|= 3 knn_acc=0.932 bal=0.941 mcc=0.904
+[ok] wine           HTBS  |R|= 1 knn_acc=0.758 bal=0.771 mcc=0.640
+[ok] wine           NRS   |R|= 9 knn_acc=0.977 bal=0.979 mcc=0.967
+[ok] sonar          GBRS  |R|= 1 knn_acc=0.683 bal=0.683 mcc=0.370
+[ok] sonar          HTBS  |R|= 1 knn_acc=0.683 bal=0.683 mcc=0.370
+[ok] sonar          NRS   |R|=10 knn_acc=0.828 bal=0.825 mcc=0.656
+[ok] heart_statlog  GBRS  |R|= 1 knn_acc=0.552 bal=0.544 mcc=0.089
+[ok] heart_statlog  HTBS  |R|= 1 knn_acc=0.552 bal=0.544 mcc=0.089
+[ok] heart_statlog  NRS   |R|= 9 knn_acc=0.815 bal=0.811 mcc=0.628
+site-packages/sklearn/model_selection/_split.py:812: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+site-packages/sklearn/metrics/_classification.py:2939: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+[ok] ecoli          GBRS  |R|= 2 knn_acc=0.780 bal=0.559 mcc=0.695
+site-packages/sklearn/model_selection/_split.py:812: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+[ok] ecoli          HTBS  |R|= 2 knn_acc=0.717 bal=0.427 mcc=0.605
+site-packages/sklearn/model_selection/_split.py:812: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+[ok] ecoli          NRS   |R|= 7 knn_acc=0.851 bal=0.737 mcc=0.795
+[ok] ionosphere     GBRS  |R|= 1 knn_acc=0.795 bal=0.779 mcc=0.558
+[ok] ionosphere     HTBS  |R|= 6 knn_acc=0.886 bal=0.857 mcc=0.752
+[ok] ionosphere     NRS   |R|=24 knn_acc=0.860 bal=0.814 mcc=0.702
+[ok] dermatology    GBRS  |R|= 8 knn_acc=0.956 bal=0.962 mcc=0.947
+[ok] dermatology    HTBS  |R|= 2 knn_acc=0.650 bal=0.496 mcc=0.621
+[ok] dermatology    NRS   |R|=16 knn_acc=0.943 bal=0.939 mcc=0.930
+[ok] spectf         GBRS  |R|= 2 knn_acc=0.759 bal=0.690 mcc=0.388
+[ok] spectf         HTBS  |R|= 3 knn_acc=0.779 bal=0.730 mcc=0.455
+[ok] spectf         NRS   |R|=16 knn_acc=0.762 bal=0.718 mcc=0.425
+[ok] breast_cancer  GBRS  |R|= 1 knn_acc=0.909 bal=0.897 mcc=0.805
+[ok] breast_cancer  HTBS  |R|= 1 knn_acc=0.909 bal=0.897 mcc=0.805
+[ok] breast_cancer  NRS   |R|=16 knn_acc=0.956 bal=0.946 mcc=0.906
+[ok] diabetes       GBRS  |R|= 1 knn_acc=0.555 bal=0.487 mcc=-0.029
+[ok] diabetes       HTBS  |R|= 1 knn_acc=0.555 bal=0.487 mcc=-0.029
+[ok] diabetes       NRS   |R|= 8 knn_acc=0.729 bal=0.681 mcc=0.382
+[ok] vehicle        GBRS  |R|= 1 knn_acc=0.467 bal=0.467 mcc=0.291
+[ok] vehicle        HTBS  |R|= 1 knn_acc=0.467 bal=0.467 mcc=0.291
+[ok] vehicle        NRS   |R|=18 knn_acc=0.688 bal=0.690 mcc=0.586
+[ok] yeast          GBRS  |R|= 2 knn_acc=0.385 bal=0.207 mcc=0.196
+[ok] yeast          HTBS  |R|= 8 knn_acc=0.551 bal=0.563 mcc=0.417
+[ok] yeast          NRS   |R|= 8 knn_acc=0.551 bal=0.563 mcc=0.417
+[ok] pc3            GBRS  |R|= 1 knn_acc=0.863 bal=0.500 mcc=-0.003
+[ok] pc3            HTBS  |R|= 1 knn_acc=0.863 bal=0.500 mcc=-0.003
+[ok] pc3            NRS   |R|=27 knn_acc=0.880 bal=0.587 mcc=0.210
+[ok] waveform       GBRS  |R|= 2 knn_acc=0.636 bal=0.636 mcc=0.455
+[ok] waveform       HTBS  |R|= 2 knn_acc=0.636 bal=0.636 mcc=0.455
+[ok] waveform       NRS   |R|= 0 knn_acc=0.000 bal=0.000 mcc=0.000
+[ok] digits         GBRS  |R|= 8 knn_acc=0.833 bal=0.833 mcc=0.815
+[ok] digits         HTBS  |R|= 4 knn_acc=0.470 bal=0.470 mcc=0.414
+[ok] digits         NRS   |R|=25 knn_acc=0.950 bal=0.950 mcc=0.945
+[ok] steel_plates   GBRS  |R|= 1 knn_acc=0.595 bal=0.543 mcc=0.088
+[ok] steel_plates   HTBS  |R|= 1 knn_acc=0.595 bal=0.543 mcc=0.088
+[ok] steel_plates   NRS   |R|= 5 knn_acc=0.653 bal=0.602 mcc=0.212
+[ok] segment        GBRS  |R|= 2 knn_acc=0.848 bal=0.848 mcc=0.825
+[ok] segment        HTBS  |R|= 1 knn_acc=0.608 bal=0.608 mcc=0.544
+[ok] segment        NRS   |R|=15 knn_acc=0.961 bal=0.961 mcc=0.955
+DONE

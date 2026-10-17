@@ -1,0 +1,19 @@
+# Reproducibility environment for
+# "Non-Monotonicity in Granular-Ball Attribute Reduction"
+#
+# The published numbers (all CSVs under supplementary_data/ and results/)
+# were produced with Python 3.11 and the versions pinned below. Granular-ball
+# generation depends on scikit-learn's KMeans, whose cluster assignments can
+# differ slightly across releases, so we pin scikit-learn exactly; reproducing
+# the exact per-dataset rates requires this version. Newer scikit-learn will
+# run the code but may shift low-order digits on a few datasets.
+
+scikit-learn==1.9.0
+numpy>=1.26,<3
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.7
+
+# Datasets are fetched on first use via sklearn.datasets.fetch_openml
+# (OpenML v1 task ids); an internet connection is required for the first run,
+# after which the local scikit-learn cache is reused.

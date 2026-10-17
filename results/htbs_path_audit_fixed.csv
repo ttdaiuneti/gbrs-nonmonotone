@@ -1,0 +1,6 @@
+dataset,d,reduct_size,gamma_star,gamma_reduct,total_candidate_evals,total_decreasing_evals,pct_decreasing,max_drop
+ecoli,7,2,0.422619,0.5625,13,0,0.0,0.0
+ionosphere,34,6,0.780627,0.789174,189,0,0.0,0.0
+dermatology,34,2,0.379781,0.459016,67,0,0.0,0.0
+spectf,44,3,0.722063,0.805158,129,0,0.0,0.0
+yeast,8,8,0.162399,0.16779,36,0,0.0,0.0

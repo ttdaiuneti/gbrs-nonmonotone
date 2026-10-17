@@ -1,0 +1,13 @@
+[ok] wine           gbrs=35.1 deg=35.6 fuz=26.9 (32s)
+[ok] sonar          gbrs=49.6 deg=49.6 fuz=45.2 (165s)
+[ok] heart_statlog  gbrs=34.0 deg=34.0 fuz=26.3 (72s)
+[ok] ecoli          gbrs=31.8 deg=30.5 fuz=22.4 (39s)
+[ok] ionosphere     gbrs=48.2 deg=48.1 fuz=42.3 (174s)
+[ok] dermatology    gbrs=27.8 deg=28.6 fuz=21.5 (132s)
+[ok] spectf         gbrs=54.4 deg=54.3 fuz=51.2 (210s)
+[ok] breast_cancer  gbrs=53.5 deg=51.7 fuz=40.6 (96s)
+[ok] diabetes       gbrs=55.4 deg=55.4 fuz=41.1 (78s)
+[ok] vehicle        gbrs=54.1 deg=53.8 fuz=45.9 (252s)
+[ok] yeast          gbrs=35.9 deg=35.9 fuz=26.2 (109s)
+[ok] pc3            gbrs=62.2 deg=62.2 fuz=43.9 (242s)
+DONE ./results/variant_audit.csv

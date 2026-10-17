@@ -1,0 +1,17 @@
+[ok] wine           scaled=  0.13%  fixed=  0.00%
+[ok] sonar          scaled=  0.03%  fixed=  0.00%
+[ok] heart_statlog  scaled=  1.61%  fixed=  0.00%
+[ok] ecoli          scaled=  0.76%  fixed=  0.00%
+[ok] ionosphere     scaled=  0.97%  fixed=  0.00%
+[ok] dermatology    scaled=  2.90%  fixed=  0.00%
+[ok] spectf         scaled=  0.07%  fixed=  0.00%
+[ok] breast_cancer  scaled=  0.54%  fixed=  0.00%
+[ok] diabetes       scaled=  0.00%  fixed=  0.00%
+[ok] vehicle        scaled=  3.23%  fixed=  0.00%
+[skip] yeast (n=1484)
+[skip] pc3 (n=1563)
+[skip] waveform (n=5000)
+[skip] digits (n=5620)
+[skip] steel_plates (n=1941)
+[skip] segment (n=2310)
+DONE

@@ -1,0 +1,3 @@
+metric,n_datasets,k_methods,datasets_used,datasets_excluded,chi2,p_chi2,iman_davenport_F,p_F,nemenyi_CD_alpha05
+knn3_acc,15,3,breast_cancer;dermatology;diabetes;digits;ecoli;heart_statlog;ionosphere;pc3;segment;sonar;spectf;steel_plates;vehicle;wine;yeast,waveform,15.269230769230754,0.00048342451145685965,14.511749347258455,4.736509338465478e-05,0.8555426348230694
+svm_acc,15,3,breast_cancer;dermatology;diabetes;digits;ecoli;heart_statlog;ionosphere;pc3;segment;sonar;spectf;steel_plates;vehicle;wine;yeast,waveform,19.9591836734694,4.633597796567674e-05,27.829268292682983,2.2134450883282142e-07,0.8555426348230694
