@@ -21,6 +21,8 @@ c = c[c.dataset.isin(["ecoli", "diabetes", "yeast", "wine", "heart_statlog", "ve
                       "breast_cancer", "segment", "steel_plates", "ionosphere",
                       "dermatology", "pc3", "waveform", "spectf", "sonar", "digits"])]
 full = c.drop_duplicates("dataset").full_knn3.mean()
+# released GBRS pipeline (its own grid and 5-NN selection), drawn as a reference line
+rel = pd.read_csv(HERE.parent / "results" / "gbrs_released_eval.csv").knn3_acc.mean()
 
 
 S = pd.read_csv(HERE.parent / "results" / "param_sensitivity.csv").rename(columns={"|R|": "R"})
@@ -56,6 +58,8 @@ fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.5), sharey=True)
 for ax, (m, title, keys, labels, main) in zip(axes, panels):
     y = [val(m, k) for k in keys]
     ax.axhline(full, color="#444444", ls="--", lw=1)
+    if m == "GBRS":
+        ax.axhline(rel, color="#2a8a3a", ls=":", lw=1.3)
     n_line = 3 if m == "NRS" else len(keys)
     ax.plot(range(n_line), y[:n_line], color="#8fa8d0", lw=1, zorder=1)
     for i, (k, v) in enumerate(zip(keys, y)):
@@ -79,10 +83,11 @@ for ax, (m, title, keys, labels, main) in zip(axes, panels):
     ax.grid(axis="y", color="#dddddd", lw=0.5)
 axes[0].set_ylabel(r"mean $k$NN-3 accuracy")
 from matplotlib.lines import Line2D
-fig.legend(handles=[Line2D([], [], color="#1f4e9c", marker="o", mfc="white", ms=6, label="GBRS"),
+fig.legend(handles=[Line2D([], [], color="#1f4e9c", marker="o", mfc="white", ms=6, label="GBRS-A"),
                     Line2D([], [], color="#c06a10", marker="s", mfc="white", ms=5.5, label="HTBS ($\\alpha=0.10$)"),
+                    Line2D([], [], color="#2a8a3a", ls=":", lw=1.3, label="GBRS (released)"),
                     Line2D([], [], color="#444444", ls="--", lw=1, label="all attributes")],
-           loc="upper center", ncol=3, frameon=False, fontsize=8, bbox_to_anchor=(0.5, 1.02))
+           loc="upper center", ncol=4, frameon=False, fontsize=8, bbox_to_anchor=(0.5, 1.02))
 fig.tight_layout(rect=(0, 0, 1, 0.93))
 fig.savefig(out / "fig_sensitivity.pdf")
-print("wrote", out / "fig_sensitivity.pdf", "full =", round(full, 3))
+print("wrote", out / "fig_sensitivity.pdf", "full =", round(full, 3), "released =", round(rel, 3))

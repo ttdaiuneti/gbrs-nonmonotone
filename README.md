@@ -91,6 +91,31 @@ attribute (its γ already exceeds the full-attribute target computed once at
 the start), then repeats the trace with NRS on the same data to show the
 early stop is specific to non-monotone γ, not the greedy-loop structure.
 
+## Released GBRS code (replication)
+
+The manuscript calls the code released with GBRS "GBRS" and our own
+size-adaptive implementation (`code/gbrs_core.py`) "GBRS-A". The released code is
+**not** redistributed here. Fetch it yourself and pass its path:
+
+```bash
+git clone https://github.com/syxiaa/GBRS && cd GBRS && git checkout e7d92e78e7f00a38f41417d4ea6835a08c87e62c
+# the file used is GBRS/Code/GBRS.py, imported unchanged
+```
+
+| Step | Command | Output |
+|---|---|---|
+| Reductions over its grid of minimum ball sizes 2(d+2-i) | `python code/run_gbrs_official.py --gbrs /path/GBRS.py` (small sets); add `--datasets yeast,pc3,steel_plates,segment,waveform,digits --coarse` for the six larger sets | `results/gbrs_official_reduct.csv` |
+| Score the selected reducts (first best 5-NN score, i ascending) | `python code/eval_gbrs_released.py` | `results/gbrs_released_eval.csv` |
+| Violation audit (Table 5), greedy-path trace, nested grid for the larger sets | `python code/run_gbrs_official_extra.py --gbrs /path/GBRS.py` | `results/gbrs_official_audit_full.csv`, `gbrs_official_path.csv`, `gbrs_official_nested_grid.csv` |
+| Nested CV, small sets (whole pipeline inside each training fold) | `python code/run_gbrs_official_nested.py --gbrs /path/GBRS.py` | `results/gbrs_official_nested.csv` |
+| Statistics for the four reducers | `python code/run_statistics_v2.py` | `results/stats_*_v2.csv` |
+| Tables | `python code/make_results_tables_v2.py <tables dir>`, `make_mono_table.py`, `make_nested_table_v2.py`, `make_sensitivity_table.py` | `.tex` tables |
+| Figures | `python code/generate_cd_diagram.py <dir>`, `generate_sensitivity_figure.py <dir>` | CD diagram, sensitivity figure |
+
+The run at the smallest ball size takes about three hours on Digits (single core).
+`results/gbrs_official_audit.csv` is an earlier, smaller audit (20 subsets) kept for
+the record; the manuscript uses `gbrs_official_audit_full.csv`.
+
 ## Notes on determinism
 
 - γ is deterministic given the audit seed: fresh-generation k-means uses

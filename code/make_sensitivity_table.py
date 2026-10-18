@@ -44,12 +44,12 @@ for m, st, lab in order:
     if prev and prev != m:
         L.append("\\midrule")
     prev = m
-    L.append(f"{m} & {lab} & {len(ds)} & {g.loc[ds, 'R'].mean():.1f} & {g.loc[ds, 'knn3_acc'].mean():.3f} & {g.loc[ds, 'svm_acc'].mean():.3f} & {cell} \\\\")
+    L.append(f"{'GBRS-A' if m == 'GBRS' else m} & {lab} & {len(ds)} & {g.loc[ds, 'R'].mean():.1f} & {g.loc[ds, 'knn3_acc'].mean():.3f} & {g.loc[ds, 'svm_acc'].mean():.3f} & {cell} \\\\")
 body = "\n".join(L)
 tex = r"""\begin{table*}[pos=!htbp]
 \centering
 \small
-\caption{Sensitivity of the reducts to the parameter of each reducer (mean over datasets).}
+\caption{Sensitivity of the reducts to the parameter of each reducer (mean over datasets). GBRS-A is our implementation of fresh generation with the target rule.}
 \label{tab:sens}
 \begin{tabular*}{\linewidth}{ll @{\extracolsep{\fill}} rrrrrrr}
 \toprule
@@ -59,7 +59,7 @@ Reducer & Setting & $N$ & $|R|$ & $k$NN-3 & SVM & $\Delta$ & W/D/L & $p$ \\
 \bottomrule
 \end{tabular*}
 \tabnote{%
-Means are over the datasets on which both the setting and the main-table setting return a nonempty reduct: sixteen for GBRS and HTBS, fifteen for NRS, fourteen for the fixed radius. $\Delta$ is the change in $k$NN-3 accuracy against the main-table setting of the same reducer; W/D/L counts datasets; $p$ is a two-sided Wilcoxon signed-rank test without correction for multiplicity. HTBS rows with $\nmin$ use a constant minimum ball size and $\alpha=0.10$. For NRS the radius is $c\,\bar d/\sqrt{|A|}$; the fixed radius is $\bar d_{\mathrm{full}}/\sqrt d$ for every subset.}
+Means are over the datasets on which both the setting and the main-table setting return a nonempty reduct: sixteen for GBRS-A and HTBS, fifteen for NRS, fourteen for the fixed radius. $\Delta$ is the change in $k$NN-3 accuracy against the main-table setting of the same reducer; W/D/L counts datasets; $p$ is a two-sided Wilcoxon signed-rank test without correction for multiplicity. HTBS rows with $\nmin$ use a constant minimum ball size and $\alpha=0.10$. For NRS the radius is $c\,\bar d/\sqrt{|A|}$; the fixed radius is $\bar d_{\mathrm{full}}/\sqrt d$ for every subset.}
 \end{table*}
 """
 Path(sys.argv[1]).write_text(tex)

@@ -1,6 +1,6 @@
-"""Nemenyi CD diagram from the rerun Friedman ranks (English labels).
+"""Nemenyi CD diagram from the Friedman ranks of the four reducers (English labels).
 
-Reads results/stats_ranks_rerun.csv and results/stats_friedman_rerun.csv
+Reads results/stats_ranks_v2.csv and results/stats_friedman_v2.csv
 and writes figures/fig_cd_diagram.pdf (and .png).
 """
 from __future__ import annotations
@@ -24,8 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
 FIGS = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "figures"
 
-METHODS = ["NRS", "GBRS", "HTBS"]
-COLORS = {"NRS": "#1f77b4", "GBRS": "#d62728", "HTBS": "#2ca02c"}
+METHODS = ["GBRS", "NRS", "GBRS-A", "HTBS"]
 
 
 def cliques(ranks: dict, cd: float) -> list[list[str]]:
@@ -58,14 +57,14 @@ def draw_panel(ax, ranks: dict, cd: float, title: str, p_chi2: float, n: int):
     hangs from its rank with an elbow line to a label on the nearer side of the
     axis; methods whose ranks differ by less than CD are joined by a thick bar.
     Elbow depths are chosen so that no line crosses another one."""
-    lo, hi = 1.0, 3.0
-    ax.set_xlim(-0.55, 4.55)
+    lo, hi = 1.0, float(len(METHODS))
+    ax.set_xlim(lo - 1.75, hi + 1.75)
     ax.set_ylim(-1.55, 1.45)
     ax.axis("off")
 
     # rank axis on top
     ax.plot([lo, hi], [0, 0], color="black", lw=1.2)
-    for t in (1.0, 1.5, 2.0, 2.5, 3.0):
+    for t in [lo + 0.5 * k for k in range(int(2 * (hi - lo)) + 1)]:
         big = t % 1.0 == 0.0
         ax.plot([t, t], [0, 0.07 if big else 0.045], color="black", lw=1.1)
         if big:
@@ -116,10 +115,10 @@ def draw_panel(ax, ranks: dict, cd: float, title: str, p_chi2: float, n: int):
 
 
 def main() -> None:
-    ranks_df = pd.read_csv(RESULTS / "stats_ranks_rerun.csv")
-    fried = pd.read_csv(RESULTS / "stats_friedman_rerun.csv").set_index("metric")
+    ranks_df = pd.read_csv(RESULTS / "stats_ranks_v2.csv")
+    fried = pd.read_csv(RESULTS / "stats_friedman_v2.csv").set_index("metric")
 
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6))
+    fig, axes = plt.subplots(1, 2, figsize=(7.4, 2.9))
     panels = [
         ("knn3_acc", "kNN-3"),
         ("svm_acc", "SVM-RBF"),
