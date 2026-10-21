@@ -139,7 +139,7 @@ def gen_mono_table():
         "\\begin{table}[t]\n\\centering\n"
         "\\caption{Monotonicity violation rates (\\%) and mean violation magnitude "
         "($\\overline{|\\Delta\\gamma|}$) per dataset (seed 42, "
-        "$\\varepsilon=10^{-10}$; 200 random subsets for $d\\le20$, 100 for $d>20$). "
+        "$\\varepsilon=10^{-10}$; 200 random subsets for $m\\le20$, 100 for $m>20$). "
         "HTBS: $0.0\\%$ on all datasets. "
         f"Grand average GBRS $={avg_gbrs:.1f}\\%$ "
         f"(bootstrap 95\\% CI ${ci_lo:.1f}$--${ci_hi:.1f}$, {n_ds} datasets). "
@@ -149,7 +149,7 @@ def gen_mono_table():
         "\\begin{tabular}{@{}lrrrrr@{}}\n\\toprule\n"
         " & & \\multicolumn{2}{c}{GBRS} & NRS & HTBS \\\\\n"
         "\\cmidrule(lr){3-4}\n"
-        "Dataset & $d$ & Rate\\% & $\\overline{|\\Delta\\gamma|}$ "
+        "Dataset & $m$ & Rate\\% & $\\overline{|\\Delta\\gamma|}$ "
         "& Rate\\% & Rate\\% \\\\\n"
         "\\midrule\n"
         + "\n".join(body) + "\n"
@@ -245,14 +245,8 @@ def gen_figure_mono(by_ds_arg=None):
     gbrs_coords = "\n".join(f"    ({d},{r:.4f})" for d, r in zip(d_vals, gbrs_r))
     nrs_coords  = "\n".join(f"    ({d},{r:.4f})" for d, r in zip(d_vals, nrs_r))
 
+    # No trend line: the rate has no significant rank correlation with m.
     trend_plot = ""
-    if len(d_vals) >= 4:
-        slope, intercept = np.polyfit(np.log(np.array(d_vals, dtype=float) + 1), gbrs_r, 1)
-        trend_plot = (
-            f"  \\addplot[dashed, thick, blue!70!black, domain={min(d_vals)}:{max(d_vals)}, samples=120]\n"
-            f"    {{{slope:.6f}*ln(x+1) + {intercept:.6f}}};\n"
-            f"  \\addlegendentry{{GBRS log-linear fit}}\n"
-        )
 
     tex = f"""% Violation rate vs. dimensionality (pgfplots; auto-generated)
 \\begin{{tikzpicture}}
@@ -261,7 +255,7 @@ def gen_figure_mono(by_ds_arg=None):
   height=4.6cm,
   xmin=0, xmax={max(d_vals) + 4},
   ymin=-2, ymax=70,
-  xlabel={{Number of conditional attributes ($d$)}},
+  xlabel={{Number of conditional attributes ($m$)}},
   ylabel={{Violation rate (\\%)}},
   grid=major,
   grid style={{dashed, gray!35}},
@@ -278,7 +272,7 @@ def gen_figure_mono(by_ds_arg=None):
   ] coordinates {{
 {gbrs_coords}
   }};
-  \\addlegendentry{{GBRS}}
+  \\addlegendentry{{GBRS-A}}
   \\addplot[
     only marks,
     mark=triangle,
@@ -361,7 +355,7 @@ def gen_cls_tables():
         rt_lines.append(" & ".join(rr) + r" \\")
 
     header_k = (
-        "Dataset & $d$ & Acc$_{\\text{full}}$ & "
+        "Dataset & $m$ & Acc$_{\\text{full}}$ & "
         "\\multicolumn{2}{c|}{GBRS} & "
         "\\multicolumn{2}{c|}{HTBS} & \\multicolumn{2}{c}{NRS} \\\\\n"
         "\\cmidrule(lr){4-5}\\cmidrule(lr){6-7}\\cmidrule(lr){8-9}\n"
@@ -390,7 +384,7 @@ def gen_cls_tables():
                "same reducts as Table~\\ref{tab:knn3}.")
 
     rt_header = (
-        "Dataset & $d$ & \\multicolumn{2}{c|}{GBRS} & "
+        "Dataset & $m$ & \\multicolumn{2}{c|}{GBRS} & "
         "\\multicolumn{2}{c|}{HTBS} & \\multicolumn{2}{c}{NRS} \\\\\n"
         "\\cmidrule(lr){3-4}\\cmidrule(lr){5-6}\\cmidrule(lr){7-8}\n"
         " & & $|R|$ & Time(s) & $|R|$ & Time(s) & $|R|$ & Time(s) \\\\\n\\midrule"

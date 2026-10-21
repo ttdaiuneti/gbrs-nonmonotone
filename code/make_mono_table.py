@@ -38,21 +38,21 @@ rows = [f"{NAMES[k]} & {int(g.loc[k, 'd'])} & {rel.loc[k, 'rate']:.1f} & {rel.lo
         f"{r.loc[k, 'violation_rate']:.1f}" for k in order]
 hdr = (" & & \\multicolumn{2}{c}{GBRS} & \\multicolumn{3}{c}{GBRS-A, $\\nmin$} & NRS & & & \\multicolumn{2}{c}{GBRS} & \\multicolumn{3}{c}{GBRS-A, $\\nmin$} & NRS \\\\\n"
        "\\cmidrule(lr){3-4}\\cmidrule(lr){5-7}\\cmidrule(lr){11-12}\\cmidrule(lr){13-15}\n"
-       "Dataset & $d$ & Rate & $\\overline{|\\Delta\\gamma|}$ & Adapt. & 2 & 5 & Rate"
-       " & Dataset & $d$ & Rate & $\\overline{|\\Delta\\gamma|}$ & Adapt. & 2 & 5 & Rate \\\\\n")
+       "Dataset & $m$ & Rate & $\\overline{|\\Delta\\gamma|}$ & Adapt. & 2 & 5 & Rate"
+       " & Dataset & $m$ & Rate & $\\overline{|\\Delta\\gamma|}$ & Adapt. & 2 & 5 & Rate \\\\\n")
 body = "\n".join(f"{l} & {rr} \\\\" for l, rr in zip(rows[:8], rows[8:]))
 avg = (f"\\multicolumn{{16}}{{c}}{{\\textit{{Average over 16 datasets:}} GBRS {rel.rate.mean():.1f} "
        f"({rel.mdrop.mean():.3f}); GBRS-A {g.violation_rate.mean():.1f}, {a2.violation_rate.mean():.1f}, "
        f"{a5.violation_rate.mean():.1f}; NRS {r.violation_rate.mean():.1f}}} \\\\")
 tex = ("\\begin{table*}[pos=!htbp]\n\\centering\n\\small\n\\setlength{\\tabcolsep}{2.6pt}\n"
-       "\\caption{Violation rate (\\%) of the random-subset audit, ordered by $d$. GBRS uses the generator of the released code "
+       "\\caption{Violation rate (\\%) of the random-subset audit, ordered by $m$. GBRS uses the generator of the released code "
        "at the minimum ball size that its pipeline selects on each dataset, and $\\overline{|\\Delta\\gamma|}$ is the mean size of its "
        "violations. GBRS-A uses our generator with the size-adaptive minimum ball size (Adapt.) and with $\\nmin$ fixed at 2 and 5. "
        "HTBS had no violations on any dataset.}\n"
        "\\label{tab:mono}\n"
        "\\begin{tabular*}{\\linewidth}{@{}l @{\\hspace{4pt}\\extracolsep{\\fill}} r r r r r r r @{\\hspace{0.8em}} l @{\\hspace{4pt}} r r r r r r r@{}}\n"
        "\\toprule\n" + hdr + "\\midrule\n" + body + "\n\\midrule\n" + avg + "\n\\bottomrule\n\\end{tabular*}\n"
-       "\\tabnote{%\nSeed 42, $\\varepsilon=10^{-10}$; 200 random subsets for $d\\le20$ and 100 for $d>20$, drawn in the same way for every "
+       "\\tabnote{%\nSeed 42, $\\varepsilon=10^{-10}$; 200 random subsets for $m\\le20$ and 100 for $m>20$, drawn in the same way for every "
        "column. For GBRS the audited quantity is the number of instances in pure balls, as in the released code, and SteelPlates uses the "
        "25 attributes of the classification tables; the other columns keep all 33. The $95\\%$ bootstrap interval of the GBRS-A adaptive "
        "average is $41.1$--$50.5$, and its mean violation size is $" + f"{g.mean_delta.mean():.3f}" + "$. An entropy-threshold admission "

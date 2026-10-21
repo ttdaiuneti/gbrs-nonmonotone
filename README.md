@@ -1,9 +1,9 @@
 # Non-Monotonicity in Granular-Ball Attribute Reduction — Reproducibility Package
 
 Supplementary code and data for the manuscript
-*Granular-Ball Attribute Reduction Is Not Monotone: Prevalence, an Impossibility
-Result, and Downstream Consequences*
-(T. D. Tran, T. C. Pham, T. H. L. Luong).
+*Non-Monotone Dependency in Fresh-Generation Granular-Ball Attribute Reduction:
+Prevalence, an Impossibility Result and the Role of the Stopping Rule*
+(T. C. Pham, T. H. L. Luong, T. D. Tran).
 
 Every number, table, and figure in the manuscript is regenerable from the
 scripts here plus the released CSVs. Raw per-dataset results are the single

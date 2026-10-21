@@ -44,7 +44,7 @@ def load():
 def head(first, sub):
     cm = "".join(f"\\cmidrule(lr){{{4 + 2 * k}-{5 + 2 * k}}}" for k in range(4))
     return ("\\toprule\n"
-            f"Dataset & $d$ & {first} & " + " & ".join(f"\\multicolumn{{2}}{{c}}{{{m}}}" for m in M)
+            f"Dataset & $m$ & {first} & " + " & ".join(f"\\multicolumn{{2}}{{c}}{{{m}}}" for m in M)
             + " \\\\\n" + cm + "\n & & & " + " & ".join(f"$|R|$ & {sub}" for _ in M) + " \\\\\n\\midrule\n")
 
 
@@ -114,24 +114,24 @@ def results_block(W, E):
            "score over its grid of minimum ball sizes, so its reducts are selected with the labels and a classifier "
            "(Section~\\ref{sec:nested} measures the effect).\n"
            "$^{\\dagger}$SteelPlates uses the leakage-free feature set: the eight one-hot fault-indicator columns that "
-           "jointly determine the label are removed ($d:33\\to25$; Section~\\ref{sec:dataqual}).}\n\\end{table*}\n")
+           "jointly determine the label are removed ($m:33\\to25$; Section~\\ref{sec:dataqual}).}\n\\end{table*}\n")
     svm = ("\\begin{table*}[pos=!htbp]\n\\centering\n"
            "\\caption{SVM-RBF ($C=1$, \\texttt{gamma=scale}) post-reduction accuracy on the same reducts as Table~\\ref{tab:knn3}.}\n"
            "\\label{tab:svm}\n\\small\n\\setlength{\\tabcolsep}{3pt}\n\\renewcommand{\\arraystretch}{1.12}\n"
            f"\\begin{{tabular*}}{{\\linewidth}}{{{spec}}}\n" + head("SVM$_{\\text{full}}$", "Acc$\\,\\pm\\,$std")
            + acc_table(W, "svm") + "\\bottomrule\n\\end{tabular*}\n\\tabnote{%\n"
-           "$^{\\dagger}$SteelPlates uses the leakage-free feature set ($d:33\\to25$; see Table~\\ref{tab:knn3}).}\n\\end{table*}\n")
+           "$^{\\dagger}$SteelPlates uses the leakage-free feature set ($m:33\\to25$; see Table~\\ref{tab:knn3}).}\n\\end{table*}\n")
     rt = ("\\begin{table*}[pos=!htbp]\n\\centering\n"
           "\\caption{Reduct size and wall-clock reduction time (seconds, single CPU core) for the runs of Table~\\ref{tab:knn3}.}\n"
           "\\label{tab:runtime}\n\\small\n\\setlength{\\tabcolsep}{4pt}\n\\renewcommand{\\arraystretch}{1.12}\n"
           "\\begin{tabular*}{\\linewidth}{@{}l @{\\extracolsep{\\fill}} r r r r r r r r r r@{}}\n\\toprule\n"
-          "Dataset & $d$ & \\multicolumn{3}{c}{GBRS} & \\multicolumn{2}{c}{GBRS-A} & \\multicolumn{2}{c}{HTBS} & "
+          "Dataset & $m$ & \\multicolumn{3}{c}{GBRS} & \\multicolumn{2}{c}{GBRS-A} & \\multicolumn{2}{c}{HTBS} & "
           "\\multicolumn{2}{c}{NRS} \\\\\n\\cmidrule(lr){3-5}\\cmidrule(lr){6-7}\\cmidrule(lr){8-9}\\cmidrule(lr){10-11}\n"
           " & & $|R|$ & Run & Sweep & $|R|$ & Time & $|R|$ & Time & $|R|$ & Time \\\\\n\\midrule\n"
           + runtime_table(W, E) + "\\bottomrule\n\\end{tabular*}\n\\tabnote{%\n"
           "Time covers the whole forward-greedy loop. For GBRS, Run is the reduction at the selected minimum ball size "
-          "and Sweep is the total over its grid ($d+1$ values; five values on Yeast, PC3, SteelPlates, Segment, Waveform "
-          "and Digits), without the 5-NN scoring. $^{\\dagger}$SteelPlates on the leakage-free feature set ($d:33\\to25$).}\n"
+          "and Sweep is the total over its grid ($m+1$ values; five values on Yeast, PC3, SteelPlates, Segment, Waveform "
+          "and Digits), without the 5-NN scoring. $^{\\dagger}$SteelPlates on the leakage-free feature set ($m:33\\to25$).}\n"
           "\\end{table*}\n")
     return knn + "\n" + svm + "\n" + rt
 

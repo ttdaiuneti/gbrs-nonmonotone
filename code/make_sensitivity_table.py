@@ -59,7 +59,7 @@ Reducer & Setting & $N$ & $|R|$ & $k$NN-3 & SVM & $\Delta$ & W/D/L & $p$ \\
 \bottomrule
 \end{tabular*}
 \tabnote{%
-Means are over the datasets on which both the setting and the main-table setting return a nonempty reduct: sixteen for GBRS-A and HTBS, fifteen for NRS, fourteen for the fixed radius. $\Delta$ is the change in $k$NN-3 accuracy against the main-table setting of the same reducer; W/D/L counts datasets; $p$ is a two-sided Wilcoxon signed-rank test without correction for multiplicity. HTBS rows with $\nmin$ use a constant minimum ball size and $\alpha=0.10$. For NRS the radius is $c\,\bar d/\sqrt{|A|}$; the fixed radius is $\bar d_{\mathrm{full}}/\sqrt d$ for every subset.}
+Means are over the datasets on which both the setting and the main-table setting return a nonempty reduct: sixteen for GBRS-A and HTBS, fifteen for NRS, fourteen for the fixed radius. $\Delta$ is the change in $k$NN-3 accuracy against the main-table setting of the same reducer; W/D/L counts datasets; $p$ is a two-sided Wilcoxon signed-rank test without correction for multiplicity. HTBS rows with $\nmin$ use a constant minimum ball size and $\alpha=0.10$. For NRS the radius is $c\,\bar{\ell}_A/\sqrt{|A|}$; the fixed radius is $\bar{\ell}_{\AT}/\sqrt m$ for every subset.}
 \end{table*}
 """
 Path(sys.argv[1]).write_text(tex)

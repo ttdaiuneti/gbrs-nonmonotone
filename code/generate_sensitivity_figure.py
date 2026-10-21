@@ -52,7 +52,7 @@ panels = [
      ["0.05", "0.10", "0.20", "0.30"], "alpha=0.1"),
     ("NRS", r"(c) NRS: radius",
      ["scale=0.5", "scale=1", "scale=2", "fixed"],
-     [r"$0.5\,\bar d/\sqrt{|A|}$", r"$1\,\bar d/\sqrt{|A|}$", r"$2\,\bar d/\sqrt{|A|}$", "fixed"], "scale=1"),
+     [r"$0.5\,\bar\ell_A/\sqrt{|A|}$", r"$1\,\bar\ell_A/\sqrt{|A|}$", r"$2\,\bar\ell_A/\sqrt{|A|}$", "fixed"], "scale=1"),
 ]
 fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.5), sharey=True)
 for ax, (m, title, keys, labels, main) in zip(axes, panels):
